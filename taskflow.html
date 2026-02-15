@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Testing Services</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== SAME DESIGN SYSTEM ===== */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: #1e2b3a;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .main {
+            flex: 1;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggle-btn {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid white;
+            width: fit-content;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(192, 132, 252, 0.3);
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header h1 i {
+            color: #c084fc;
+            filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+            margin-right: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-btn {
+            text-align: center;
+            margin: 30px 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(192, 132, 252, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin: 50px 0 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .section-title i {
+            color: #c084fc;
+            font-size: 1.8rem;
+        }
+
+        /* ----- SERVICES GRID (3 COLUMNS) ----- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .service-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            border-color: #c084fc;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.15);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: #c084fc;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* ----- TESTIMONIALS (2 COLUMNS) ----- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .testimonial-card i.fa-quote-left {
+            color: #c084fc;
+            opacity: 0.3;
+            font-size: 2rem;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #444;
+            margin: 20px 0 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            padding-left: 15px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .testimonial-author i {
+            font-size: 2.2rem;
+            color: #c084fc;
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-top: 8px;
+        }
+
+        /* ----- PRICING (3 COLUMNS) ----- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: #c084fc;
+            transform: translateY(-8px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #c084fc;
+            background: linear-gradient(to bottom, #f8fafc, white);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #777;
+        }
+
+        .pricing-desc {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-features li i {
+            color: #c084fc;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features li i.fa-times {
+            color: #ff6b6b;
+        }
+
+        .pricing-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: transparent;
+            border: 2px solid #c084fc;
+            color: #c084fc;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pricing-btn:hover {
+            background: #c084fc;
+            color: white;
+        }
+
+        .popular .pricing-btn {
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            border: none;
+        }
+
+        /* ----- SKILLS BADGES ----- */
+        .skills-section {
+            margin: 40px 0 20px;
+        }
+
+        .skills-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: #f3e8ff;
+            color: #764ba2;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #c084fc;
+        }
+
+        .badge i {
+            color: #c084fc;
+        }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: #666;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #c084fc;
+            transform: translateY(-5px);
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* ----- SCROLL ANIMATION ----- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ----- MOBILE RESPONSIVE ----- */
+        @media screen and (max-width: 768px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 100px;
+            }
+
+            .services-grid, .testimonials-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card {
+                padding: 25px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Ahmed Qatar</span>  <!-- CHANGE THIS -->
+                </div>
+                <button class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+<nav class="nav">
+    <ul>
+        <li>
+            <a href="index.html" id="nav-dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="taskflow.html" id="nav-taskflow">
+                <i class="fas fa-bug"></i>
+                <span>QA Services</span>
+            </a>
+        </li>
+        <li>
+            <a href="blog.html" id="nav-blog">
+                <i class="fas fa-blog"></i>
+                <span>Blog</span>
+            </a>
+        </li>
+        <li>
+            <a href="product.html" id="nav-product">
+                <i class="fas fa-rocket"></i>
+                <span>BugHunter</span>
+            </a>
+        </li>
+        <li>
+            <a href="contact.html" id="nav-contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main">
+            <button class="toggle-btn">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </button>
+            
+            <div class="content-card fade-in">
+                <!-- ===== HERO SECTION ===== -->
+                <div class="page-header">
+                    <h1><i class="fas fa-bug"></i> QA & Testing Services</h1>
+                    <p>Professional software testing freelancer. I help businesses deliver bug-free, high-quality applications with comprehensive manual and automated testing.</p>
+                    <div class="hero-btn">
+                        <a href="contact.html" class="btn"><i class="fas fa-calendar-check"></i> Book a Free Consultation</a>
+                    </div>
+                </div>
+
+                <!-- ===== SKILLS BADGES ===== -->
+                <div class="skills-section">
+                    <div class="skills-badges">
+                        <span class="badge"><i class="fas fa-check-circle"></i> Manual Testing</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Automation Testing</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> API Testing</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Regression Testing</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Test Plans</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Bug Reports</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Selenium</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Postman</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> JIRA</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> Cypress</span>
+                    </div>
+                </div>
+
+                <!-- ===== SERVICES SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    <span>Testing Services I Offer</span>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h3>Manual Testing</h3>
+                        <p>Comprehensive manual testing including functional, UI/UX, cross-browser, and mobile testing. Detailed bug reports with screenshots and videos.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>Automation Testing</h3>
+                        <p>Selenium WebDriver, Cypress, and Playwright test automation. Regression test suites, data-driven testing, and CI/CD integration.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-plug"></i>
+                        <h3>API Testing</h3>
+                        <p>RESTful and SOAP API testing with Postman and REST Assured. Request validation, response verification, and performance testing.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Database Testing</h3>
+                        <p>SQL query validation, data integrity checks, and database migration testing. Ensure your data is accurate and consistent.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile App Testing</h3>
+                        <p>iOS and Android app testing. Installation testing, compatibility testing, and usability testing across devices.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Test Documentation</h3>
+                        <p>Detailed test plans, test cases, and bug reports. Clear documentation that developers love to work with.</p>
+                    </div>
+                </div>
+
+                <!-- ===== TESTIMONIALS SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-quote-right"></i>
+                    <span>What Clients Say</span>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <div class="testimonial-text">
+                            "Found critical bugs in our payment system that we missed. Saved us from a major production incident. Highly detailed bug reports and excellent communication."
+                        </div>
+                        <div class="testimonial-author">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="author-info">
+                                <h4>Mahmoud ElDesoky</h4>
+                                <p>CTO, FinTech Startup</p>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <div class="testimonial-text">
+                            "Automated our entire regression test suite with Selenium. Cut testing time from 3 days to 2 hours. Best investment we made for our QA process."
+                        </div>
+                        <div class="testimonial-author">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="author-info">
+                                <h4>Sarah Tamim</h4>
+                                <p>Product Owner, E-commerce</p>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PRICING SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-tags"></i>
+                    <span>Flexible Pricing Options</span>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Hourly Rate -->
+                    <div class="pricing-card">
+                        <h3>Hourly</h3>
+                        <div class="price">$35<span>/hour</span></div>
+                        <div class="pricing-desc">Perfect for small projects</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Manual testing</li>
+                            <li><i class="fas fa-check"></i> Bug reporting</li>
+                            <li><i class="fas fa-check"></i> 24-hour response</li>
+                            <li><i class="fas fa-check"></i> Screenshots/videos</li>
+                            <li><i class="fas fa-times"></i> Test automation</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Get Started</a>
+                    </div>
+
+                    <!-- Project Based (Popular) -->
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">🔥 MOST POPULAR</div>
+                        <h3>Project</h3>
+                        <div class="price">$300<span>/week</span></div>
+                        <div class="pricing-desc">Dedicated testing</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> 40 hours/week</li>
+                            <li><i class="fas fa-check"></i> Manual + Automation</li>
+                            <li><i class="fas fa-check"></i> Test plan creation</li>
+                            <li><i class="fas fa-check"></i> Daily reports</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Book Now</a>
+                    </div>
+
+                    <!-- Monthly Retainer -->
+                    <div class="pricing-card">
+                        <h3>Retainer</h3>
+                        <div class="price">$950<span>/month</span></div>
+                        <div class="pricing-desc">Ongoing QA partnership</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> 80 hours/month</li>
+                            <li><i class="fas fa-check"></i> Full test coverage</li>
+                            <li><i class="fas fa-check"></i> Automation suites</li>
+                            <li><i class="fas fa-check"></i> CI/CD integration</li>
+                            <li><i class="fas fa-check"></i> Dedicated support</li>
+                        </ul>
+                        <a href="contact.html" class="pricing-btn">Contact Me</a>
+                    </div>
+                </div>
+
+                <!-- ===== CALL TO ACTION ===== -->
+                <div style="text-align: center; margin: 50px 0 20px; padding: 30px; background: #f8fafc; border-radius: 16px;">
+                    <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">
+                        <i class="fas fa-rocket" style="color: #c084fc;"></i> Ready to launch bug-free?
+                    </h2>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Let's discuss your project and create a custom testing plan that fits your needs and budget.
+                    </p>
+                    <a href="contact.html" class="btn" style="font-size: 1.2rem; padding: 16px 36px;">
+                        <i class="fas fa-paper-plane"></i> Hire Me Today
+                    </a>
+                </div>
+
+                <!-- ===== FOOTER ===== -->
+                <div class="footer">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-upwork"></i></a>
+                    </div>
+                    <p>© 2026 Ahmed Qatar. Freelance QA & Software Testing Specialist.</p>
+                    <p style="margin-top: 10px;">
+                        <a href="#" style="color: #c084fc; text-decoration: none;">Available for work</a> • 
+                        <a href="contact.html" style="color: #c084fc; text-decoration: none;">Get a quote</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
