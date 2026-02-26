@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me - Task 2</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Your existing CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FIXED CONTACT PAGE STYLES -->
+    <style>
+        /* Override body for contact page */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        /* Sidebar stays at fixed width */
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: #1e2b3a;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        /* Main content area */
+        .main {
+            flex: 1;
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggle-btn {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid white;
+            width: fit-content;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+
+        /* WHITE CARD - FIXED SPACING */
+        .content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* FORM HEADER */
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(192, 132, 252, 0.3);
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .form-header h1 i {
+            color: #c084fc;
+            filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+            margin-right: 10px;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* FIXED FORM GROUPS - Each field on its own line */
+        .form-group {
+            margin-bottom: 25px;
+            width: 100%;
+            display: block;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        label i {
+            color: #c084fc;
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        /* INPUT FIELDS - Full width */
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.1);
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ERROR MESSAGES */
+        .error-message {
+            display: block;
+            margin-top: 6px;
+            color: #ff4444;
+            font-size: 0.8rem;
+            font-weight: 500;
+            min-height: 18px;
+            width: 100%;
+        }
+
+        input.error, textarea.error {
+            border-color: #ff4444;
+            background: #fff8f8;
+        }
+
+        /* SUBMIT BUTTON - Full width */
+        .submit-btn {
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(192, 132, 252, 0.4);
+        }
+
+        .submit-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        .submit-btn.success {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        /* PURPLE NEON THEME */
+        .logo i {
+            color: #c084fc;
+            filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+        }
+
+        .logo span {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px rgba(192, 132, 252, 0.4);
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media screen and (max-width: 768px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 100px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .form-header h1 {
+                font-size: 1.4rem;
+            }
+
+            input, textarea {
+                padding: 10px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Ahmed Qatar</span>  <!-- CHANGE THIS -->
+                </div>
+                <button class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+<nav class="nav">
+    <ul>
+        <li>
+            <a href="index.html" id="nav-dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="taskflow.html" id="nav-taskflow">
+                <i class="fas fa-bug"></i>
+                <span>QA Services</span>
+            </a>
+        </li>
+        <li>
+            <a href="blog.html" id="nav-blog">
+                <i class="fas fa-blog"></i>
+                <span>Blog</span>
+            </a>
+        </li>
+        <li>
+            <a href="product.html" id="nav-product">
+                <i class="fas fa-rocket"></i>
+                <span>BugHunter</span>
+            </a>
+        </li>
+        <li>
+            <a href="contact.html" id="nav-contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        </aside>
+
+        <!-- Main content with Contact Form -->
+        <main class="main">
+            <button class="toggle-btn">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </button>
+            
+            <div class="content">
+                <div class="form-header">
+                    <h1><i class="fas fa-paper-plane"></i> Get in Touch</h1>
+                    <p>I'd love to hear from you! Send me a message and I'll respond as soon as possible.</p>
+                </div>
+
+                <form id="contactForm">
+                    <!-- Full Name - FULL WIDTH -->
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i> Full Name
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="John Doe">
+                        <small class="error-message" id="nameError"></small>
+                    </div>
+
+                    <!-- Email Address - FULL WIDTH -->
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com">
+                        <small class="error-message" id="emailError"></small>
+                    </div>
+
+                    <!-- Subject - FULL WIDTH -->
+                    <div class="form-group">
+                        <label for="subject">
+                            <i class="fas fa-tag"></i> Subject
+                        </label>
+                        <input type="text" id="subject" name="subject" placeholder="Job Opportunity, Question, Feedback...">
+                        <small class="error-message" id="subjectError"></small>
+                    </div>
+
+                    <!-- Message - FULL WIDTH -->
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment"></i> Message
+                        </label>
+                        <textarea id="message" name="message" rows="5" placeholder="Write your message here..."></textarea>
+                        <small class="error-message" id="messageError"></small>
+                    </div>
+
+                    <!-- Submit Button - FULL WIDTH -->
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-send"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script src="contact.js"></script>
+</body>
+</html>

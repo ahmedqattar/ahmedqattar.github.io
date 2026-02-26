@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Ahmed Qatar</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== SAME DESIGN SYSTEM ===== */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: #1e2b3a;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .main {
+            flex: 1;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggle-btn {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid white;
+            width: fit-content;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(192, 132, 252, 0.3);
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header h1 i {
+            color: #c084fc;
+            filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+            margin-right: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ----- CATEGORY FILTER ----- */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #c084fc;
+            color: #c084fc;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ----- SEARCH BAR (BONUS) ----- */
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 50px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-box:focus-within {
+            border-color: #c084fc;
+            box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.1);
+        }
+
+        .search-box i {
+            color: #999;
+            margin-left: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* ----- BLOG GRID WITH IMAGES ----- */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .blog-card:hover {
+            border-color: #c084fc;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.15);
+        }
+
+        .blog-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            z-index: 2;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        .blog-meta i {
+            color: #c084fc;
+            margin-right: 5px;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: #c084fc;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ----- PAGINATION ----- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover {
+            border-color: #c084fc;
+            color: #c084fc;
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #c084fc, #a855f7);
+            color: white;
+            border-color: transparent;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ----- NO RESULTS ----- */
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #c084fc;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* ----- MOBILE RESPONSIVE ----- */
+        @media screen and (max-width: 768px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 100px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card {
+                padding: 25px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ----- FADE IN ANIMATION ----- */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Ahmed Qatar</span>
+                </div>
+                <button class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="taskflow.html">
+                            <i class="fas fa-bug"></i>
+                            <span>QA Services</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog.html" style="background: #2a3a4b; color: white;">
+                            <i class="fas fa-blog"></i>
+                            <span>Blog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="product.html">
+                            <i class="fas fa-rocket"></i>
+                            <span>BugHunter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main">
+            <button class="toggle-btn">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </button>
+            
+            <div class="content-card fade-in">
+                <!-- ===== HEADER ===== -->
+                <div class="page-header">
+                    <h1><i class="fas fa-blog"></i> My Blog</h1>
+                    <p>Thoughts, tutorials, and experiences about software testing and freelancing.</p>
+                </div>
+
+                <!-- ===== SEARCH BAR (BONUS) ===== -->
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search posts by title...">
+                    </div>
+                </div>
+
+                <!-- ===== CATEGORY FILTER ===== -->
+                <div class="category-filter">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="testing">Testing</button>
+                    <button class="filter-btn" data-category="freelance">Freelance</button>
+                    <button class="filter-btn" data-category="tools">Tools</button>
+                    <button class="filter-btn" data-category="career">Career</button>
+                </div>
+
+                <!-- ===== BLOG POSTS GRID ===== -->
+                <div class="blog-grid" id="blogGrid"></div>
+
+                <!-- ===== NO RESULTS MESSAGE ===== -->
+                <div id="noResults" class="no-results" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h3>No posts found</h3>
+                    <p>Try adjusting your search or filter.</p>
+                </div>
+
+                <!-- ===== PAGINATION ===== -->
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // ===== BLOG DATA WITH IMAGES =====
+        const blogPosts = [
+            {
+                id: 1,
+                title: "How to Write Bug Reports Developers Love",
+                category: "testing",
+                date: "Feb 10, 2026",
+                excerpt: "Learn the art of writing clear, actionable bug reports that developers actually appreciate and fix quickly.",
+                image: "https://images.unsplash.com/photo-1669023414162-5bb06bbff0ec?w=600&h=400&fit=crop",
+                alt: "Developer writing code"
+            },
+            {
+                id: 2,
+                title: "My First $1000 Month as a Freelance Tester",
+                category: "freelance",
+                date: "Feb 5, 2026",
+                excerpt: "How I landed my first clients and built a sustainable freelancing income through software testing.",
+                image: "https://images.unsplash.com/photo-1581250601918-6138c3769148?w=600&h=400&fit=crop",           },
+            {
+                id: 3,
+                title: "Selenium vs Cypress: Which One to Learn?",
+                category: "tools",
+                date: "Jan 28, 2026",
+                excerpt: "A comprehensive comparison of the two most popular automation testing frameworks.",
+                image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
+                alt: "Code comparison"
+            },
+            {
+                id: 4,
+                title: "How to Test APIs with Postman",
+                category: "testing",
+                date: "Jan 20, 2026",
+                excerpt: "A beginner's guide to API testing using Postman. Learn requests, collections, and automation.",
+                image: "https://images.unsplash.com/photo-1658204191944-374e8115a2de?w=600&h=400&fit=crop",
+                alt: "API testing on laptop"
+            },
+            {
+                id: 5,
+                title: "5 Essential Tools for QA Freelancers",
+                category: "tools",
+                date: "Jan 15, 2026",
+                excerpt: "The tools I use daily for testing, bug tracking, and client communication.",
+                image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&h=400&fit=crop",
+                alt: "Freelance tools and workspace"
+            },
+            {
+                id: 6,
+                title: "How to Get Your First Freelance Client",
+                category: "freelance",
+                date: "Jan 8, 2026",
+                excerpt: "Practical steps to find, pitch, and land your first client on Upwork and LinkedIn.",
+                image: "https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?w=600&h=400&fit=crop",
+                alt: "Business handshake"
+            },
+            {
+                id: 7,
+                title: "The Psychology of Bug Reporting",
+                category: "testing",
+                date: "Jan 2, 2026",
+                excerpt: "How to communicate bugs effectively without blaming developers.",
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
+                alt: "Team discussion and psychology"
+            },
+            {
+                id: 8,
+                title: "Building a QA Portfolio That Gets Hired",
+                category: "career",
+                date: "Dec 28, 2025",
+                excerpt: "What to include in your QA portfolio to stand out from other testers.",
+                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=400&fit=crop",
+                alt: "Portfolio folder"
+            },
+            {
+                id: 9,
+                title: "Introduction to Database Testing",
+                category: "testing",
+                date: "Dec 20, 2025",
+                excerpt: "Learn how to test databases, write SQL queries, and validate data integrity.",
+                image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&h=400&fit=crop",
+                alt: "Database server"
+            }
+        ];
+
+        // ===== GLOBAL VARIABLES =====
+        let currentCategory = 'all';
+        let currentSearch = '';
+        let currentPage = 1;
+        const postsPerPage = 3;
+
+        // ===== RENDER BLOG POSTS =====
+        function renderPosts() {
+            // Filter by category
+            let filteredPosts = blogPosts.filter(post => {
+                if (currentCategory === 'all') return true;
+                return post.category === currentCategory;
+            });
+
+            // Filter by search
+            if (currentSearch) {
+                filteredPosts = filteredPosts.filter(post =>
+                    post.title.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            }
+
+            // Show/hide no results message
+            const noResultsDiv = document.getElementById('noResults');
+            if (filteredPosts.length === 0) {
+                noResultsDiv.style.display = 'block';
+            } else {
+                noResultsDiv.style.display = 'none';
+            }
+
+            // Pagination
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages || 1;
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const paginatedPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
+
+            // Render posts
+            const blogGrid = document.getElementById('blogGrid');
+            blogGrid.innerHTML = paginatedPosts.map(post => `
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="${post.image}" alt="${post.alt}">
+                        <span class="blog-category">${post.category}</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">${post.title}</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> ${post.date}</span>
+                            <span><i class="fas fa-folder"></i> ${post.category}</span>
+                        </div>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <a href="#" class="read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render pagination
+            renderPagination(totalPages);
+        }
+
+        // ===== RENDER PAGINATION =====
+        function renderPagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            // Next button
+            paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+            
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        // ===== CHANGE PAGE =====
+        window.changePage = function(page) {
+            currentPage = page;
+            renderPosts();
+        };
+
+        // ===== FILTER BY CATEGORY =====
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                currentPage = 1;
+                renderPosts();
+            });
+        });
+
+        // ===== SEARCH FUNCTIONALITY =====
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            currentSearch = e.target.value;
+            currentPage = 1;
+            renderPosts();
+        });
+
+        // ===== INITIAL RENDER =====
+        renderPosts();
+    </script>
+</body>
+</html>

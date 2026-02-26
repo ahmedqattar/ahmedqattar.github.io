@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Qatar - QA Portfolio</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Limelight&display=swap" rel="stylesheet">
+    <!-- ONLY external CSS - NO internal styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-user-secret"></i>
+                    <span>Ahmed Qatar</span>
+                </div>
+                <button class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" id="nav-dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                    <li><a href="taskflow.html" id="nav-taskflow"><i class="fas fa-bug"></i><span>QA Services</span></a></li>
+                    <li><a href="blog.html" id="nav-blog"><i class="fas fa-blog"></i><span>Blog</span></a></li>
+                    <li><a href="product.html" id="nav-product"><i class="fas fa-rocket"></i><span>BugHunter</span></a></li>
+                    <li><a href="contact.html" id="nav-contact"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main">
+            <button class="toggle-btn">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </button>
+            
+            <div class="content-card">
+                <!-- PROFILE SECTION -->
+                <div class="profile-section">
+                    <div class="profile-photo">
+                        <img src="https://github.com/ahmedqattar/ahmedqattar.github.io/blob/main/ahmed-profile.jpeg?raw=true" alt="Ahmed Qatar">
+                        <div class="photo-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <h1>Ahmed Qatar</h1>
+                        <div class="profile-title">
+                            <span><i class="fas fa-bug"></i> QA Engineer</span>
+                            <span><i class="fas fa-laptop-code"></i> Freelance Tester</span>
+                        </div>
+                        <p class="profile-bio">
+                            🔍 Manual & Automation Tester | 3+ years experience | Helping startups ship bug-free software.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-bug"></i></div>
+                        <div class="stat-number">340+</div>
+                        <div class="stat-label">Bugs Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-number">2,100+</div>
+                        <div class="stat-label">Hours Tested</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-smile"></i></div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                </div>
+
+                <!-- FEATURED PROJECTS -->
+                <div class="section-header">
+                    <h2><i class="fas fa-folder-open"></i> Featured Projects</h2>
+                    <a href="taskflow.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="portfolio-tag">Manual Testing</span>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>E-Commerce Platform</h3>
+                            <p>Full regression testing, payment gateway validation, and bug reporting for an online store.</p>
+                            <div class="portfolio-links">
+                                <a href="#"><i class="fas fa-eye"></i> Case Study</a>
+                                <a href="#"><i class="fas fa-bug"></i> 23 bugs</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span class="portfolio-tag">Mobile Testing</span>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Fitness App</h3>
+                            <p>iOS & Android testing, performance testing, and UX validation for 50k+ users.</p>
+                            <div class="portfolio-links">
+                                <a href="#"><i class="fas fa-eye"></i> Case Study</a>
+                                <a href="#"><i class="fas fa-bug"></i> 47 bugs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="skills-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-code"></i> Tech Stack</h2>
+                    </div>
+                    <div class="skills-grid">
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> Selenium</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> Cypress</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> Postman</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> JIRA</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> TestRail</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> SQL</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> Python</span>
+                        <span class="skill-badge"><i class="fas fa-check-circle"></i> JavaScript</span>
+                    </div>
+                </div>
+
+                <!-- RECENT ACTIVITY -->
+                <div style="margin-top: 40px;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="activity-content">
+                                <div class="activity-text">Completed testing for E-commerce project</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-blog"></i></div>
+                            <div class="activity-content">
+                                <div class="activity-text">Published new blog: "How to Write Bug Reports"</div>
+                                <div class="activity-time">5 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="activity-content">
+                                <div class="activity-text">Got 5-star review from FinTech client</div>
+                                <div class="activity-time">1 week ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK NOTE -->
+                <div class="task-note">
+                    <i class="fas fa-info-circle"></i>
+                    📌 Task 1: Collapsible Sidebar - Click the "Menu" button to test the sidebar toggle animation.
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Auto-highlight current page
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navMap = {
+            'index.html': 'nav-dashboard',
+            'taskflow.html': 'nav-taskflow',
+            'blog.html': 'nav-blog',
+            'product.html': 'nav-product',
+            'contact.html': 'nav-contact'
+        };
+        
+        if (navMap[currentPage]) {
+            const activeLink = document.getElementById(navMap[currentPage]);
+            if (activeLink) {
+                activeLink.style.background = '#2a3a4b';
+                activeLink.style.color = 'white';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BugHunter Pro - AI Testing Tool</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== SAME DESIGN SYSTEM WITH DARK MODE SUPPORT ===== */
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --card-bg: white;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --card-bg-secondary: #f8fafc;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0,0,0,0.15);
+            --neon-color: #c084fc;
+            --neon-glow: rgba(192, 132, 252, 0.6);
+            --btn-gradient: linear-gradient(135deg, #c084fc, #a855f7);
+        }
+
+        .dark-mode {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --card-bg: #1e1e2f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0bec5;
+            --card-bg-secondary: #2a2a3a;
+            --border-color: #3a3a4a;
+            --shadow-color: rgba(0,0,0,0.5);
+            --neon-color: #a78bfa;
+            --neon-glow: rgba(167, 139, 250, 0.6);
+            --btn-gradient: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+
+        .app {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: #1e2b3a;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .dark-mode .sidebar {
+            background: #0f172a;
+        }
+
+        .main {
+            flex: 1;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggle-btn {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid white;
+            width: fit-content;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px var(--shadow-color);
+            padding: 40px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== THEME TOGGLE BUTTON ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: var(--card-bg-secondary);
+            border: 2px solid var(--neon-color);
+            color: var(--neon-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--neon-glow);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            background: rgba(192, 132, 252, 0.2);
+            color: var(--neon-color);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid var(--neon-color);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero h1 i {
+            color: var(--neon-color);
+            filter: drop-shadow(0 0 8px var(--neon-glow));
+            margin-right: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--btn-gradient);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(192, 132, 252, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--neon-color);
+            color: var(--neon-color);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--neon-color);
+            color: white;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: var(--card-bg-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .hero-image i {
+            font-size: 8rem;
+            color: var(--neon-color);
+            filter: drop-shadow(0 0 20px var(--neon-glow));
+        }
+
+        .floating-badge {
+            position: absolute;
+            background: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .badge-1 {
+            top: -15px;
+            right: -15px;
+            color: #22c55e;
+        }
+
+        .badge-2 {
+            bottom: -15px;
+            left: -15px;
+            color: #ef4444;
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 60px 0 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .section-title i {
+            color: var(--neon-color);
+            font-size: 2rem;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg-secondary);
+            border-radius: 16px;
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--neon-color);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--neon-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg-secondary);
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .testimonial-card i.fa-quote-left {
+            color: var(--neon-color);
+            opacity: 0.3;
+            font-size: 2rem;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin: 20px 0 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            padding-left: 15px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .testimonial-author i {
+            font-size: 2.2rem;
+            color: var(--neon-color);
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-top: 8px;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card {
+            background: var(--card-bg-secondary);
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--neon-color);
+            transform: translateY(-8px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--neon-color);
+            background: linear-gradient(to bottom, var(--card-bg-secondary), var(--card-bg));
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--btn-gradient);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .pricing-desc {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-features li i {
+            color: var(--neon-color);
+            font-size: 0.9rem;
+        }
+
+        .pricing-features li i.fa-times {
+            color: #ff6b6b;
+        }
+
+        .pricing-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: transparent;
+            border: 2px solid var(--neon-color);
+            color: var(--neon-color);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pricing-btn:hover {
+            background: var(--neon-color);
+            color: white;
+        }
+
+        .popular .pricing-btn {
+            background: var(--btn-gradient);
+            color: white;
+            border: none;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: var(--card-bg-secondary);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin: 50px 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .cta-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .cta-section h2 i {
+            color: var(--neon-color);
+            margin-right: 10px;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-color);
+            transform: translateY(-5px);
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media screen and (max-width: 768px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 100px;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            .features-grid, .testimonials-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .content-card {
+                padding: 25px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-bug"></i>
+                    <span>YOUR NAME</span>
+                </div>
+                <button class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+<nav class="nav">
+    <ul>
+        <li>
+            <a href="index.html" id="nav-dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="taskflow.html" id="nav-taskflow">
+                <i class="fas fa-bug"></i>
+                <span>QA Services</span>
+            </a>
+        </li>
+        <li>
+            <a href="blog.html" id="nav-blog">
+                <i class="fas fa-blog"></i>
+                <span>Blog</span>
+            </a>
+        </li>
+        <li>
+            <a href="product.html" id="nav-product">
+                <i class="fas fa-rocket"></i>
+                <span>BugHunter</span>
+            </a>
+        </li>
+        <li>
+            <a href="contact.html" id="nav-contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main">
+            <button class="toggle-btn">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </button>
+            
+            <div class="content-card">
+                <!-- ===== THEME TOGGLE BUTTON ===== -->
+                <div class="theme-toggle" onclick="document.body.classList.toggle('dark-mode')">
+                    <i class="fas fa-moon"></i>
+                </div>
+
+                <!-- ===== HERO SECTION ===== -->
+                <div class="hero">
+                    <div class="hero-content">
+                        <span class="hero-badge">
+                            <i class="fas fa-robot"></i> AI-POWERED TESTING
+                        </span>
+                        <h1>
+                            <i class="fas fa-bug"></i> BugHunter Pro
+                        </h1>
+                        <p class="hero-subtitle">
+                            Find bugs faster with AI-powered test automation. Ship quality code with confidence.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn"><i class="fas fa-rocket"></i> Start Free Trial</a>
+                            <a href="#" class="btn btn-outline"><i class="fas fa-play"></i> Watch Demo</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">10k+</span>
+                                <span class="stat-label">Bugs Found</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Happy Teams</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">99.9%</span>
+                                <span class="stat-label">Accuracy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <i class="fas fa-bug"></i>
+                        <div class="floating-badge badge-1">
+                            <i class="fas fa-check-circle"></i> 98% faster
+                        </div>
+                        <div class="floating-badge badge-2">
+                            <i class="fas fa-bolt"></i> Real-time
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== FEATURES SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    <span>Powerful Features</span>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI Bug Detection</h3>
+                        <p>Machine learning algorithms that learn your codebase and predict potential bugs before they happen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Test Automation</h3>
+                        <p>Record and replay tests across browsers. Run regression suites in minutes, not hours.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Real-time insights into test coverage, bug trends, and team productivity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-plug"></i>
+                        <h3>CI/CD Integration</h3>
+                        <p>Seamless integration with GitHub, GitLab, Jenkins, and more. Catch bugs before merge.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Smart Reports</h3>
+                        <p>Auto-generated bug reports with screenshots, logs, and video recordings.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Team Collaboration</h3>
+                        <p>Share test results, assign bugs, and track fixes in real-time.</p>
+                    </div>
+                </div>
+
+                <!-- ===== TESTIMONIALS SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-quote-right"></i>
+                    <span>Trusted by QA Teams</span>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <div class="testimonial-text">
+                            "BugHunter Pro cut our regression testing time from 3 days to 45 minutes. The AI bug detection caught 12 critical issues we missed in code review."
+                        </div>
+                        <div class="testimonial-author">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="author-info">
+                                <h4>Jennifer Lee</h4>
+                                <p>QA Lead, FinTech Startup</p>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <div class="testimonial-text">
+                            "We ship 3x faster now. The CI/CD integration catches bugs automatically before they reach production. Worth every penny."
+                        </div>
+                        <div class="testimonial-author">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="author-info">
+                                <h4>Marcus Rodriguez</h4>
+                                <p>CTO, E-commerce Platform</p>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PRICING SECTION ===== -->
+                <div class="section-title">
+                    <i class="fas fa-tags"></i>
+                    <span>Simple Pricing</span>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Free Plan -->
+                    <div class="pricing-card">
+                        <h3>Starter</h3>
+                        <div class="price">$0<span>/month</span></div>
+                        <div class="pricing-desc">For individual developers</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> 100 test runs/month</li>
+                            <li><i class="fas fa-check"></i> Manual testing</li>
+                            <li><i class="fas fa-check"></i> Basic reports</li>
+                            <li><i class="fas fa-times"></i> AI bug detection</li>
+                            <li><i class="fas fa-times"></i> Team collaboration</li>
+                        </ul>
+                        <a href="#" class="pricing-btn">Get Started</a>
+                    </div>
+
+                    <!-- Pro Plan -->
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">🔥 MOST POPULAR</div>
+                        <h3>Pro</h3>
+                        <div class="price">$49<span>/month</span></div>
+                        <div class="pricing-desc">For professional teams</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> 5,000 test runs/month</li>
+                            <li><i class="fas fa-check"></i> AI bug detection</li>
+                            <li><i class="fas fa-check"></i> CI/CD integration</li>
+                            <li><i class="fas fa-check"></i> Team up to 5 users</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                        </ul>
+                        <a href="#" class="pricing-btn">Start Free Trial</a>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">$199<span>/month</span></div>
+                        <div class="pricing-desc">For large organizations</div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Unlimited test runs</li>
+                            <li><i class="fas fa-check"></i> Everything in Pro</li>
+                            <li><i class="fas fa-check"></i> Unlimited team members</li>
+                            <li><i class="fas fa-check"></i> SLA guarantee</li>
+                            <li><i class="fas fa-check"></i> Dedicated support</li>
+                        </ul>
+                        <a href="#" class="pricing-btn">Contact Sales</a>
+                    </div>
+                </div>
+
+                <!-- ===== CTA SECTION ===== -->
+                <div class="cta-section">
+                    <h2><i class="fas fa-rocket"></i> Ready to ship bug-free code?</h2>
+                    <p>Join 500+ teams that trust BugHunter Pro for their testing needs.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn"><i class="fas fa-calendar"></i> Book a Demo</a>
+                        <a href="contact.html" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Contact Sales</a>
+                    </div>
+                </div>
+
+                <!-- ===== FOOTER ===== -->
+                <div class="footer">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                    <p>© 2026 BugHunter Pro. Created by YOUR NAME.</p>
+                    <p style="margin-top: 10px;">
+                        <a href="#" style="color: var(--neon-color); text-decoration: none;">Privacy</a> • 
+                        <a href="#" style="color: var(--neon-color); text-decoration: none;">Terms</a> • 
+                        <a href="#" style="color: var(--neon-color); text-decoration: none;">Docs</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Theme toggle icon update
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Change icon based on theme
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+    </script>
+</body>
+</html>
