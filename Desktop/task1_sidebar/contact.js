@@ -94,7 +94,7 @@ form.addEventListener('submit', async function(e) {
             };
 
             // Send to Vercel backend
-            const response = await fetch('https://portfolio-backend-16mg.vercel.app/send-email', {
+            const response = await fetch('https://portfolio-backend-eight-pearl.vercel.app/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
