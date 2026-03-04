@@ -168,8 +168,8 @@ body {
 
 .profile-photo {
     position: relative;
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea, #764ba2);
     display: flex;
@@ -580,4 +580,5 @@ body {
         transition: opacity 0.3s;
     }
 }
+
 
