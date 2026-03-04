@@ -334,12 +334,12 @@ body {
 }
 
 .portfolio-image {
-    height: 160px;
+    height: 200px;
     background: linear-gradient(45deg, #667eea, #764ba2);
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: bottom;
     color: white;
     font-size: 3rem;
 }
@@ -580,6 +580,7 @@ body {
         transition: opacity 0.3s;
     }
 }
+
 
 
 
